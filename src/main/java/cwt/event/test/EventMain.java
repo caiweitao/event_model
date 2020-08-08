@@ -15,5 +15,13 @@ public class EventMain {
 		Event event = new LevelUpEvent(EventType.ROLE_LEVEL_UP,10001);
 		event.setSync(false);
 		EventDispatcher.INSTANCE.fireEvent(event);
+		
+		try {
+			Thread.sleep(1000*15);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		EventDispatcher.INSTANCE.shutdown();
 	}
 }

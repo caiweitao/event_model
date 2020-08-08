@@ -22,6 +22,7 @@ public enum EventDispatcher {
 	private LinkedBlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>();
 	
 	EventDispatcher(){
+		// 开启异步执行线程
 		new Thread(new EventWorker()).start();
 	}
 	
@@ -75,6 +76,11 @@ public enum EventDispatcher {
 			}
 		}
 	}
+	
+	public void shutdown () {
+		eventQueue.add(new Event(EventType.EXIT, false));
+		System.out.println("退出异步执行线程......");
+	}
 
 	/**
 	 * @author caiweitao
@@ -88,6 +94,9 @@ public enum EventDispatcher {
 			while (true) {
 				try {
 					Event event = eventQueue.take();
+					if (event.getEvtType() == EventType.EXIT) {
+						break;
+					}
 					syncHandler(event);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
