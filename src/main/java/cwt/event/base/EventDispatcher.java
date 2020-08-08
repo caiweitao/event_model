@@ -1,9 +1,9 @@
 package cwt.event.base;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -34,7 +34,7 @@ public enum EventDispatcher {
 	public void registerEvent(EventType evtType, EventListener listener) {
 		Set<EventListener> listeners = observers.get(evtType);
 		if(listeners == null) {
-			listeners = new CopyOnWriteArraySet<EventListener>();
+			listeners = new HashSet<EventListener>();
 			observers.put(evtType, listeners);
 		}
 		listeners.add(listener);
