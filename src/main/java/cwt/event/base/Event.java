@@ -34,5 +34,4 @@ public class Event {
 	public void setSync (boolean sync) {
 		this.sync = sync;
 	}
-
 }

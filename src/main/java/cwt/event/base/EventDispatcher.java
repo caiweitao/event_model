@@ -51,7 +51,7 @@ public enum EventDispatcher {
 		
 		//如果事件是同步的，那么就在消息主线程执行逻辑
 		if (event.isSync()) {
-			syncHandler(event);
+			handler(event);
 		} else {
 			//否则，就丢到事件线程异步执行
 			eventQueue.add(event);
@@ -63,7 +63,7 @@ public enum EventDispatcher {
 	 * 同步处理器
 	 * @param event
 	 */
-	private void syncHandler (Event event) {
+	private void handler (Event event) {
 		EventType evtType = event.getEvtType();
 		Set<EventListener> listeners = observers.get(evtType);
 		if(listeners != null) {
@@ -97,7 +97,7 @@ public enum EventDispatcher {
 					if (event.getEvtType() == EventType.EXIT) {
 						break;
 					}
-					syncHandler(event);
+					handler(event);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
