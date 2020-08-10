@@ -17,7 +17,7 @@
 
 
 
-##1. 首先需要一个监听器接口（EventListener）
+## 监听器接口（EventListener） ##
   
 所有监听器实现该接口，逻辑在 handleEvent（）方法中实现。
 
@@ -30,7 +30,7 @@
     	public void handleEvent(Event event);
     }
 
-##2. 定义事件类（Event）
+## 事件类（Event） ##
 
         public class Event {
     	
@@ -66,7 +66,7 @@
 
     
 
-##3. 事件类型枚举类（EventType）
+## 事件类型枚举类（EventType） ##
 
 	    public enum EventType {
     		LOGIN,//登陆
@@ -75,7 +75,7 @@
     		EXIT;//退出事件
     	}
 
-##4. 事件分发器（EventDispatcher）
+## 事件分发器（EventDispatcher） ##
 
 	
 事件分发器是最核心部分，包括注册事件和派发事件（触发事件），派发事件又分同步和异步执行。
@@ -140,7 +140,7 @@
 这里把 EventDispatcher 定义为枚举类，目的是想通过枚举来实现单例。
 
 
-##5. 事件类型注解（Evt）
+## 事件类型注解（Evt） ##
 事件类型注解是为了标注监听器对哪些事件感兴趣，在服务启动的时候，通过注解解析，注册事件。
 	
 例如：
@@ -158,17 +158,17 @@
     	}
     
 
-##6. 监听器管理器（EventListenManagerBase）
+## 监听器管理器（EventListenManagerBase） ##
 监听器管理器跟事件类型注解一起使用，程序中创建自己的管理器继承 **EventListenManagerBase** ，然后调用 **initEventListen ()**方法就可以注册事件。
 
-##7. 基本用法
+## 基本用法 ##
 
-###① 在事件类型枚举类（**EventType**）中声明事件。
+###① 在事件类型枚举类（**EventType**）中声明事件。###
 	
-###② 创建监听器（继承**EventListener**接口）。
+###② 创建监听器（继承**EventListener**接口）。###
 	
-###③ 创建监听器管理器（继承**EventListenManagerBase**类），在成员变量中通过Evt注解，声明监听器感兴趣的事件。
+###③ 创建监听器管理器（继承**EventListenManagerBase**类），在成员变量中通过Evt注解，声明监听器感兴趣的事件。###
 	
-###④ 在服务启动时调用**EventListenManagerBase**类中的 initEventListen()**方法注册事件。
+###④ 在服务启动时调用**EventListenManagerBase**类中的 initEventListen()**方法注册事件。###
 	
-###⑤ 在事件触发的地方调用**fireEvent(event)**
+###⑤ 在事件触发的地方调用**fireEvent(event)**###
