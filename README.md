@@ -163,12 +163,12 @@
 
 ## 基本用法 ##
 
-###① 在事件类型枚举类（**EventType**）中声明事件。###
+### ① 在事件类型枚举类（**EventType**）中声明事件。###
 	
-###② 创建监听器（继承**EventListener**接口）。###
+### ② 创建监听器（继承**EventListener**接口）。###
 	
-###③ 创建监听器管理器（继承**EventListenManagerBase**类），在成员变量中通过Evt注解，声明监听器感兴趣的事件。###
+### ③ 创建监听器管理器（继承**EventListenManagerBase**类），在成员变量中通过Evt注解，声明监听器感兴趣的事件。###
 	
-###④ 在服务启动时调用**EventListenManagerBase**类中的 initEventListen()**方法注册事件。###
+### ④ 在服务启动时调用**EventListenManagerBase**类中的 initEventListen()**方法注册事件。###
 	
-###⑤ 在事件触发的地方调用**fireEvent(event)**###
+### ⑤ 在事件触发的地方调用**fireEvent(event)**###
