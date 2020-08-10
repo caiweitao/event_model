@@ -159,7 +159,7 @@
     
 
 ## 监听器管理器（EventListenManagerBase） ##
-监听器管理器跟事件类型注解一起使用，程序中创建自己的管理器继承 **EventListenManagerBase** ，然后调用 **initEventListen ()**方法就可以注册事件。
+监听器管理器跟事件类型注解一起使用，程序中创建自己的管理器继承 **EventListenManagerBase** ，然后调用 **initEventListen ()** 方法就可以注册事件。
 
 ## 基本用法 ##
 
