@@ -1,22 +1,22 @@
 package cwt.event.base;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author caiweitao
  * @Date 2020年8月7日
- * @Description 事件分发器
+ * @Description 事件分发器(由于事件都是预先注册好的，所以这里不考虑多线程问题，不允许在游戏运行过成中动态添加观察者)
  */
 public enum EventDispatcher {
 
 	INSTANCE; //采用枚举实现单例模式
 	
 	// 事件类型与事件监听器列表的映射关系
-	private final Map<EventType,Set<EventListener>> observers = new HashMap<>();
+	private final Map<EventType,List<EventListener>> observers = new HashMap<>();
 	
 	// 异步执行的事件队列 
 	private LinkedBlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>();
@@ -32,9 +32,9 @@ public enum EventDispatcher {
 	 * @param listener 具体监听器
 	 */
 	public void registerEvent(EventType evtType, EventListener listener) {
-		Set<EventListener> listeners = observers.get(evtType);
+		List<EventListener> listeners = observers.get(evtType);
 		if(listeners == null) {
-			listeners = new HashSet<EventListener>();
+			listeners = new ArrayList<EventListener>();
 			observers.put(evtType, listeners);
 		}
 		listeners.add(listener);
@@ -65,7 +65,7 @@ public enum EventDispatcher {
 	 */
 	private void handler (Event event) {
 		EventType evtType = event.getEvtType();
-		Set<EventListener> listeners = observers.get(evtType);
+		List<EventListener> listeners = observers.get(evtType);
 		if(listeners != null) {
 			for(EventListener listener:listeners) {
 				try{
