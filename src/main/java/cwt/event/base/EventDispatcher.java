@@ -16,7 +16,7 @@ public enum EventDispatcher {
 	INSTANCE; //采用枚举实现单例模式
 	
 	// 事件类型与事件监听器列表的映射关系
-	private final Map<EventType,List<EventListener>> observers = new HashMap<>();
+	private final Map<EventType,List<EventListener<? extends Event>>> observers = new HashMap<>();
 	
 	// 异步执行的事件队列 
 	private LinkedBlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>();
@@ -31,10 +31,10 @@ public enum EventDispatcher {
 	 * @param evtType 事件类型
 	 * @param listener 具体监听器
 	 */
-	public void registerEvent(EventType evtType, EventListener listener) {
-		List<EventListener> listeners = observers.get(evtType);
+	public void registerEvent(EventType evtType, EventListener<? extends Event> listener) {
+		List<EventListener<? extends Event>> listeners = observers.get(evtType);
 		if(listeners == null) {
-			listeners = new ArrayList<EventListener>();
+			listeners = new ArrayList<EventListener<? extends Event>>();
 			observers.put(evtType, listeners);
 		}
 		listeners.add(listener);
@@ -63,9 +63,10 @@ public enum EventDispatcher {
 	 * 同步处理器
 	 * @param event
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void handler (Event event) {
 		EventType evtType = event.getEvtType();
-		List<EventListener> listeners = observers.get(evtType);
+		List<EventListener<? extends Event>> listeners = observers.get(evtType);
 		if(listeners != null) {
 			for(EventListener listener:listeners) {
 				try{

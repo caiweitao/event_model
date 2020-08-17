@@ -14,7 +14,7 @@ public class EventListenManager extends EventListenManagerBase {
 
 	@Evt(eventType=EventType.ROLE_LEVEL_UP)
 	public AttrChangeListener attr;
-	@Evt(eventType=EventType.ROLE_LEVEL_UP)
-	public SkillListener skill;
+//	@Evt(eventType=EventType.ROLE_LEVEL_UP)
+//	public SkillListener skill;
 	
 }
