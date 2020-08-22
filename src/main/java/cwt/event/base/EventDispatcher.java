@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -15,6 +17,8 @@ public enum EventDispatcher {
 
 	INSTANCE; //采用枚举实现单例模式
 	
+	private ExecutorService executorService;
+	
 	// 事件类型与事件监听器列表的映射关系
 	private final Map<EventType,List<EventListener<? extends Event>>> observers = new HashMap<>();
 	
@@ -22,8 +26,8 @@ public enum EventDispatcher {
 	private LinkedBlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>();
 	
 	EventDispatcher(){
-		// 开启异步执行线程
-		new Thread(new EventWorker()).start();
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new EventWorker());
 	}
 	
 	/**

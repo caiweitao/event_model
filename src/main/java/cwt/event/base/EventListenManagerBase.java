@@ -17,6 +17,7 @@ public abstract class EventListenManagerBase {
 	/**
 	 * 初始化 注册监听器（启动程序时调用）
 	 */
+	@SuppressWarnings("unchecked")
 	public void initEventListen () {
 		Field[] fields = getClass().getDeclaredFields();
 		for (Field f:fields) {
@@ -24,9 +25,9 @@ public abstract class EventListenManagerBase {
 			if (evt != null) {
 				EventType eventType = evt.eventType();
 				Class<?> listenClass = f.getType();
-				EventListener newInstance;
+				EventListener<? extends Event> newInstance;
 				try {
-					newInstance = (EventListener)listenClass.newInstance();
+					newInstance = (EventListener<? extends Event>)listenClass.newInstance();
 					//注册事件
 					EventDispatcher.INSTANCE.registerEvent(eventType, newInstance);
 				} catch (InstantiationException e) {
